@@ -1,0 +1,24 @@
+version: "3.7"
+
+volumes:
+  grafana_data: {}
+
+networks:
+  gf:
+
+services:
+  grafana:
+    image: grafana/grafana
+    user: "472"
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    networks:
+      - gf
+    restart: always
